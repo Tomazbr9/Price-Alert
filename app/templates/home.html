@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block main_content %}
+<div class="container">
+    <div class="push-elements"></div>
+    <h1>Rastrear Produtos</h1>
+    <form class="form-url" method="POST" action="{% url "home" %}">
+        {% csrf_token %}
+        {{form.url}}
+        <button class="btn btn-warning">Cadastrar Produto</button>
+    </form>
+</div>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="" alt="">
+                        <div class="card-body">
+                            <p class="card-text">{{product.name}}</p>
+                            <p class="">{{product.price}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}     
+         </div>
+    </div>
+</div>
+{% endblock main_content %}
+

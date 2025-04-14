@@ -2,6 +2,9 @@
 <html lang="pt-BR">
 {% include "partials/head.html" %}
 <body>
-    {% block main_content %}{% endblock main_content %}
+    {% include "partials/header.html" %}
+    <main>
+        {% block main_content %}{% endblock main_content %}
+    </main>
 </body>
 </html>
