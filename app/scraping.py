@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from typing import Dict
 
 # Função que faz  o scraping de produtos do mercado livre
-def scraping_product_information(url) -> Dict:
+def scraping_product_information(url: str) -> Dict:
     headers: dict = {'User-Agent': 'Mozilla/5.0'}
 
     response = requests.get(url=url, headers=headers)
