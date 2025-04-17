@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import Product
 
@@ -17,20 +17,37 @@ class ProductForm(forms.ModelForm):
         }
 
 class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(required=True, min_length=3)
-    last_name = forms.CharField(required=True, min_length=3)
-    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
         fields = [
-            'first_name',
-            'last_name',
             'username',
             'email',
             'password1',
             'password2'
         ]
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'placeholder': 'Username',
+                'class': 'form-control',
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Email',
+                'class': 'form-control',
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['password1'].widget.attrs.update({
+            'placeholder': 'Senha',
+            'class': 'form-control'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'placeholder': 'Confirme a senha',
+            'class': 'form-control'
+        })
 
     def clean_email(self):
             email = self.cleaned_data.get('email')
@@ -41,13 +58,17 @@ class RegisterForm(UserCreationForm):
                       ValidationError('Já existe este e-mail', code='invalid')
                  )
             return email
-    
-    def clean_username(self):
-            username = self.cleaned_data.get('username')
 
-            if User.objects.filter(username=username).exists():
-                 self.add_error(
-                      'username',
-                      ValidationError('Já existe este nome de usuário', code='invalid')
-                 )
-            return username
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Adiciona classes Bootstrap nos campos
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Nome de usuário',
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Senha',
+        })

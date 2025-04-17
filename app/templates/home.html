@@ -12,17 +12,21 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for product in products %}
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img src="" alt="">
-                        <div class="card-body">
-                            <p class="card-text">{{product.name}}</p>
-                            <p class="">{{product.price}}</p>
+            {% if products %}
+                {% for product in products %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="" alt="">
+                            <div class="card-body">
+                                <p class="card-text">{{product.name}}</p>
+                                <p class="">{{product.price}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}     
+                {% endfor %}
+            {% else %}
+                <h5>Sem produtos cadastrados</h5>
+            {% endif %} 
          </div>
     </div>
 </div>
