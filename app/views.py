@@ -11,21 +11,24 @@ from .scraping import scraping_product_information
 def home(request):
 
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, user=request.user)
         if form.is_valid():
             product = form.save(commit=False)
             scraping = scraping_product_information(product.url)
+            
+            if request.user.is_authenticated:
+                product.user = request.user
+                product.name = scraping['name']
+                product.price = scraping['price']
 
-            product.user = request.user
-            product.name = scraping['name']
-            product.price = scraping['price']
-
-            product.save()
-            form = ProductForm()
+                product.save()
+                form = ProductForm()
+            else:
+                return redirect('login')
     else:
         form = ProductForm()
     
-    products = Product.objects.filter(user=request.user) if request.user.is_authenticated else None
+    products = Product.objects.filter(user=request.user) if request.user.is_authenticated else Product.objects.none()
 
     context = {
         'title_page': 'Home',
