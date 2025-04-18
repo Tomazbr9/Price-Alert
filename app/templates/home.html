@@ -1,34 +1,43 @@
 {% extends "base.html" %}
 {% block main_content %}
-<div class="container">
-    <div class="push-elements"></div>
-    <h1>Rastrear Produtos</h1>
-    <form class="form-url" method="POST" action="{% url "home" %}">
-        {% csrf_token %}
-        {{form.url}}
-        <button class="btn btn-warning">Cadastrar Produto</button>
-    </form>
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">Rastrear Produtos</h1>
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.url }}
+                {% if form.url.errors %}
+                    <div class="text-danger">
+                        {{ form.url.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+            <button class="btn btn-warning">Cadastrar Produto</button>
+        </form>
+    </div>
 </div>
-<div class="album py-5 bg-body-tertiary">
+
+<div class="album py-5 bg-light">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% if products %}
+        {% if products %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
                 {% for product in products %}
                     <div class="col">
-                        <div class="card shadow-sm">
-                            <img src="" alt="">
+                        <div class="card h-100 shadow-sm border-0">
                             <div class="card-body">
-                                <p class="card-text">{{product.name}}</p>
-                                <p class="">{{product.price}}</p>
+                                <h5 class="card-title text-primary">{{ product.name }}</h5>
+                                <p class="card-text fw-bold">R$ {{ product.price }}</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-            {% else %}
-                <h5>Sem produtos cadastrados</h5>
-            {% endif %} 
-         </div>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h5 class="text-muted">Sem produtos rastreados</h5>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock main_content %}
-
