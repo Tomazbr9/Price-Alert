@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.urls import reverse
+from decimal import Decimal
 
 from .forms import ProductForm, RegisterForm, CustomAuthenticationForm
 

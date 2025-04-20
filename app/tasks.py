@@ -14,17 +14,17 @@ def check_product_price(product_id: str):
     new_product_information: dict = scraping_product_information(product.url)
     
     product_name: str = new_product_information['name']
-    product_price: Decimal = Decimal(new_product_information['price'])
+    product_price: float = new_product_information['price']
     recipient: str = product.user.email
-    
+
     if product_price != product.price:
         send_email_for_user(product_name, product_price, recipient)
-        product.price = product_price
+        product.price = Decimal(product_price)
         product.save()
 
 @shared_task
-def check_price_of_all_products(user_id):
-    products = Product.objects.filter(user__pk=user_id)
+def check_price_of_all_products():
+    products = Product.objects.all()
 
     for product in products:
         check_product_price.delay(product.pk)

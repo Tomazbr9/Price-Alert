@@ -1,6 +1,7 @@
 import requests
 
 from bs4 import BeautifulSoup
+
 from typing import Dict
 
 # Função que faz  o scraping de produtos do mercado livre
@@ -17,12 +18,13 @@ def scraping_product_information(url: str) -> Dict:
     if price_parent_tag:
         real = price_parent_tag.find('span', class_='andes-money-amount__fraction')
         cents = price_parent_tag.find('span', class_='andes-money-amount__cents')
-        price = float(f'{real.text.strip()}.{cents.text.strip()}') if real and cents else 'Não Encontrado' 
-        return {'name': name_status, 'price': price}
+        if not cents:
+            price = float(real.text.strip().replace('.', '')) if real else 'Não Encontrado'
+        else:
+            price = float(real.text.strip().replace('.', '') + '.' + cents.text.strip()) if real else 'Não encntrado'
     
-
-    return {'name': name_status, 'price': 'Não Encontrado'}
+    return {'name': name_status, 'price': price}
      
 if __name__ == '__main__':
-    product = scraping_product_information('https://www.mercadolivre.com.br/sony-playstation-4-slim-1tb-fifa-19-bundle-cor-preto-onyx/p/MLB13876219#reco_item_pos=1&reco_backend=item_decorator&reco_backend_type=function&reco_client=home_items-decorator-legacy&reco_id=c91c4ea7-5d40-49ae-a626-16acd405a1fc&reco_model=&c_id=/home/navigation-trends-recommendations/element&c_uid=42adda19-3d61-4a85-bc9d-a09571502d04&da_id=navigation_trend&da_position=3&id_origin=/home/dynamic_access&da_sort_algorithm=ranker')
+    product = scraping_product_information('https://www.mercadolivre.com.br/redmi-note-13-4g-dual-sim-256gb-preto-8-gb-ram/p/MLB29751162#polycard_client=recommendations_home_second-best-navigation-trend-recommendations&reco_backend=machinalis-homes-univb&wid=MLB5261379674&reco_client=home_second-best-navigation-trend-recommendations&reco_item_pos=5&reco_backend_type=function&reco_id=f43cb33f-4710-4048-b62b-9af779f777b5&sid=recos&c_id=/home/second-best-navigation-trend-recommendations/element&c_uid=289a593c-455a-4e68-90f1-05c9d752f4ef')
     print(product)
