@@ -1,9 +1,11 @@
 from django.core.mail import send_mail
 from django.conf import settings
 
+from decimal import Decimal
+
 def send_email_for_user(
         name_product: str, 
-        new_product_price: float, 
+        new_product_price: Decimal, 
         recipient: str) -> None:
 
     subject: str = 'Preço Alterado!'

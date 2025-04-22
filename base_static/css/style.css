@@ -19,3 +19,20 @@ body {
 .form-url input {
     margin-bottom: 10px;
 }
+
+
+.info-user-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.info-user-header p {
+    margin: 0;
+    font-size: 20px;
+}
+
+.img-logo {
+    width: 60px;
+}

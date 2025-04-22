@@ -14,10 +14,10 @@ def check_product_price(product_id: str):
     new_product_information: dict = scraping_product_information(product.url)
     
     product_name: str = new_product_information['name']
-    product_price: float = new_product_information['price']
+    product_price: Decimal = Decimal(str(new_product_information['price']))
     recipient: str = product.user.email
 
-    if product_price != product.price:
+    if product_price < product.price:
         send_email_for_user(product_name, product_price, recipient)
         product.price = Decimal(product_price)
         product.save()

@@ -51,6 +51,7 @@ def register_view(request):
         form = RegisterForm()
     
     context = {
+        'title_page': 'Register',
         'form': form,
         'form_action': form_action
     }
@@ -70,6 +71,7 @@ def login_view(request):
         form = CustomAuthenticationForm()
     
     context = {
+        'title_page': 'Login',
         'form': form,
         'form_action': form_action
     }
