@@ -2,7 +2,7 @@ from celery import shared_task
 
 from .scraping import scraping_product_information
 
-from .models import Product
+from .models import Product, PriceHistory
 
 from decimal import Decimal
 
@@ -16,6 +16,12 @@ def check_product_price(product_id: str):
     product_name: str = new_product_information['name']
     product_price: Decimal = Decimal(str(new_product_information['price']))
     recipient: str = product.user.email
+
+    if product_price != product.price:
+        PriceHistory.objects.create(
+                    price=product_price,
+                    product=product.pk
+                )
 
     if product_price < product.price:
         send_email_for_user(product_name, product_price, recipient)

@@ -14,3 +14,8 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
+
+class PriceHistory(models.Model):
+    date = models.DateField(auto_now=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)

@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.urls import reverse
-from decimal import Decimal
 
 from .forms import ProductForm, RegisterForm, CustomAuthenticationForm
 
-from .models import Product
+from .models import Product, PriceHistory
 
 from .scraping import scraping_product_information
 
@@ -21,8 +20,13 @@ def home(request):
                 product.user = request.user
                 product.name = scraping['name']
                 product.price = scraping['price']
-
                 product.save()
+
+                PriceHistory.objects.create(
+                    price=product.price,
+                    product=product
+                )
+
                 form = ProductForm()
             else:
                 return redirect('login')
@@ -38,6 +42,21 @@ def home(request):
     }
 
     return render(request, 'home.html', context)
+
+from .models import Product, PriceHistory
+
+def price_historic_view(request, id):
+    product = get_object_or_404(Product, pk=id)
+    
+    price_history = PriceHistory.objects.filter(product=product).order_by('-date')  # supondo que tenha campo 'date'
+    last_price = price_history.first()
+    context = {
+        'product': product,
+        'all_prices': price_history,
+        'last_price': last_price
+    }
+
+    return render(request, 'price_history.html', context)
 
 def register_view(request):
     form_action = reverse('register')

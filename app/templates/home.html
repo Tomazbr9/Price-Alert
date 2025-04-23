@@ -23,14 +23,14 @@
         {% if products %}
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
                 {% for product in products %}
-                    <div class="col">
+                    <a href="{% url "price_history" product.pk %}" class="col">
                         <div class="card h-100 shadow-sm border-0">
                             <div class="card-body">
                                 <h5 class="card-title text-primary">{{ product.name }}</h5>
                                 <p class="card-text fw-bold">R$ {{ product.price }}</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>
         {% else %}
