@@ -29,36 +29,36 @@ O **Price Alert** é uma aplicação web desenvolvida com Django que permite aos
 
 ## ⚙️ Como Executar o Projeto
 
-### 1. Clone o repositório:
-```bash
-git clone https://github.com/Tomazbr9/Price-Alert.git
-cd Price-Alert
+1. **Clone o repositório:**
+    ```bash
+    git clone https://github.com/Tomazbr9/Price-Alert.git
+    cd Price-Alert
 
-### 2. Crie e ative um ambiente virtual:
-```bash
-python -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
+2. **Crie e ative um ambiente virtual:**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # No Windows: venv\Scripts\activate
 
-### 3. Instale as dependências:
-```bash
-pip install -r requirements.txt
+3. **Instale as dependências:**
+    ```bash
+    pip install -r requirements.txt
 
-### 4. Configure as variáveis de ambiente:
+4. **Configure as variáveis de ambiente:**
 Crie um arquivo .env com as seguintes variáveis:
-```bash
-EMAIL_HOST_USER=seu_email@example.com
-EMAIL_HOST_PASSWORD=sua_senha
+    ```bash
+    EMAIL_HOST_USER=seu_email@example.com
+    EMAIL_HOST_PASSWORD=sua_senha
 
-### 5. Aplique as migrações e inicie o servidor:
-```bash
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+5. **Aplique as migrações e inicie o servidor:**
+    ```bash
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver
 
-### 6. Inicie o worker e beat do Celery:
-```bash
-celery -A project worker --loglevel=info # Caso esteja no windows inclua --pool=solo
-celery -A project beat --loglevel=info
+6. **Inicie o worker e beat do Celery:**
+    ```bash
+    celery -A project worker --loglevel=info # Caso esteja no windows inclua --pool=solo
+    celery -A project beat --loglevel=info
 
 ⏰ Configuração do Celery Beat no Admin
 Para agendar tarefas periódicas:
