@@ -1,17 +1,18 @@
 # 📉 Price Alert
 
-O **Price Alert** é uma aplicação web desenvolvida com Django que permite aos usuários monitorar produtos online e receber alertas por e-mail sempre que houver uma alteração no preço. Ideal para quem deseja acompanhar ofertas e economizar em compras online.
+O **Price Alert** é uma aplicação web desenvolvida com Django que permite aos usuários monitorar produtos do **Mercado Livre** e receber alertas por e-mail quando houver alterações de preço. Este projeto foi desenvolvido com foco em praticar técnicas de web scraping, utilizando o Mercado Livre como estudo de caso para extração de dados de produtos.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- Cadastro de produtos por URL
+- Cadastro de produtos do Mercado Livre por URL
 - Rastreamento automático de preços via scraping
-- Histórico de preços para cada produto
+- Histórico de variações de preço para cada produto
 - Envio de alertas por e-mail quando o preço diminui
 - Interface amigável com Bootstrap
 - Execução de tarefas assíncronas com Celery
+- Agendamento de tarefas periódicas via Django Admin
 
 ---
 
