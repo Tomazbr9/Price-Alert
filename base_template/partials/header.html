@@ -2,11 +2,11 @@
 <header class="p-3 text-bg-dark">
   <div class="container">
     <div class="d-flex flex-wrap justify-content-between align-items-center">
-     <img class="img-logo" src="{% static "img/alerta_de_preco_logo.png" %}">
+     <a href="{% url "home" %}"><img class="img-logo" src="{% static "img/alerta_de_preco_logo.png" %}"></a>
       <div class="text-end">
         {% if not user.is_authenticated %}
           <a href="{% url "login" %}" class="btn btn-outline-light me-2">Login</a>
-          <a href="{% url "register" %}" class="btn btn-warning">Sign-up</a>
+          <a href="{% url "register" %}" class="btn btn-warning">Cadastro</a>
         {% else %}
           <div class="info-user-header">
             <p>Olá {{user}}</p>

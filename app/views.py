@@ -9,6 +9,10 @@ from .models import Product, PriceHistory
 from .scraping import scraping_product_information
 
 def home(request):
+    """
+    View GET ou POST que renderiza a home do projeto ou 
+    recebe dados de produtos
+    """
 
     if request.method == 'POST':
         form = ProductForm(request.POST, user=request.user)
@@ -46,6 +50,10 @@ def home(request):
 from .models import Product, PriceHistory
 
 def price_historic_view(request, id):
+
+    """
+    View que exibe os historico de preços de cada produto
+    """
     product = get_object_or_404(Product, pk=id)
     
     price_history = PriceHistory.objects.filter(product=product).order_by('-date')  # supondo que tenha campo 'date'
@@ -59,6 +67,9 @@ def price_historic_view(request, id):
     return render(request, 'price_history.html', context)
 
 def register_view(request):
+    """
+    View para registro de usuário
+    """
     form_action = reverse('register')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -72,13 +83,17 @@ def register_view(request):
     context = {
         'title_page': 'Register',
         'form': form,
-        'form_action': form_action
+        'form_action': form_action,
+        'button': 'Cadastrar'
     }
 
     return render(request, 'authentication.html', context)
         
 
 def login_view(request):
+    """
+    View para fazer login 
+    """
     form_action = reverse('login')
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
@@ -92,12 +107,16 @@ def login_view(request):
     context = {
         'title_page': 'Login',
         'form': form,
-        'form_action': form_action
+        'form_action': form_action,
+        'button': 'Entrar'
     }
 
     return render(request, 'authentication.html', context)
 
 
 def logout_view(request):
+    """
+    View para fazer logout
+    """
     logout(request)
     return redirect('login')
